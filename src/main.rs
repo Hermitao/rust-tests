@@ -1,3 +1,5 @@
+use random::Source;
+
 extern crate sdl2;
 
 use sdl2::pixels::Color;
@@ -20,15 +22,22 @@ pub fn main() {
     canvas.clear();
     canvas.present();
     let mut event_pump = sdl_context.event_pump().unwrap();
+
+    let mut source = random::default(42);
+
     let mut i = 0;
     'running: loop {
         i = (i + 1) % 255;
+        println!("Random number: {}", source.read::<i8>());
         canvas.set_draw_color(Color::RGB(i, 64, 255 - i));
         canvas.clear();
         for event in event_pump.poll_iter() {
             match event {
                 Event::Quit {..} |
                 Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
+                    break 'running
+                },
+                Event::KeyDown { keycode: Some(Keycode::R), .. } => {
                     break 'running
                 },
                 _ => {}

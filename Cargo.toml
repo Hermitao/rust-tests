@@ -8,3 +8,6 @@ edition = "2021"
 [dependencies]
 random = "0.13.2"
 sdl2 = "0.35.2"
+
+[dependencies.gl]
+git = "https://github.com/bjz/gl-rs"

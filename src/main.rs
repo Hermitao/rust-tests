@@ -16,7 +16,7 @@ fn main() {
     gl_attr.set_context_version(4, 1);
 
     let window = video_subsystem
-        .window("Game", 900, 700)
+        .window("8=D", 900, 700)
         .opengl()
         .resizable()
         .build()
@@ -27,8 +27,8 @@ fn main() {
         gl::load_with(|s| video_subsystem.gl_get_proc_address(s) as *const std::os::raw::c_void);
 
     unsafe {
-        gl::Viewport(0, 0, 900, 700);
-        gl::ClearColor(0.3, 0.3, 0.5, 1.0);
+        gl::Viewport(0, 0, 800, 600);
+        gl::ClearColor(0.06, 0.08, 0.1, 1.0);
     }
 
     use std::ffi::CString;

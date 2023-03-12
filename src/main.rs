@@ -3,6 +3,9 @@ extern crate sdl2;
 
 pub mod render_gl;
 
+use sdl2::event::Event;
+use sdl2::keyboard::Keycode;
+
 fn main() {
     let sdl = sdl2::init().unwrap();
     let video_subsystem = sdl.video().unwrap();
@@ -92,7 +95,16 @@ fn main() {
     'main: loop {
         for event in event_pump.poll_iter() {
             match event {
-                sdl2::event::Event::Quit { .. } => break 'main,
+                Event::Quit { .. } => { 
+                    break 'main
+                },
+                Event::KeyDown { keycode: Some(Keycode::Escape), .. } => {
+                    break 'main
+                },
+                Event::KeyDown { keycode: Some(Keycode::Q), .. } => {
+                    break 'main
+                },
+
                 _ => {}
             }
         }

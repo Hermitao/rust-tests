@@ -16,7 +16,7 @@ fn main() {
     gl_attr.set_context_version(4, 1);
 
     let window = video_subsystem
-        .window("8=D", 900, 700)
+        .window("8=D", 800, 600)
         .opengl()
         .resizable()
         .build()
@@ -47,9 +47,10 @@ fn main() {
     let mut event_pump = sdl.event_pump().unwrap();
 
     let vertices: Vec<f32> = vec![
-        -0.5, -0.5, 0.0,
-        0.5, -0.5, 0.0,
-        0.0, 0.5, 0.0
+        // positions      // colors
+        0.5, -0.5, 0.0,   1.0, 0.0, 0.0,   // bottom right
+        -0.5, -0.5, 0.0,  0.0, 1.0, 0.0,   // bottom left
+        0.0,  0.5, 0.0,   0.0, 0.0, 1.0    // top
     ];
 
     let mut vbo: gl::types::GLuint = 0;
@@ -83,8 +84,18 @@ fn main() {
             3, // the number of components per generic vertex attribute
             gl::FLOAT, // data type
             gl::FALSE, // normalized (int-to-float conversion)
-            (3 * std::mem::size_of::<f32>()) as gl::types::GLint, // stride (byte offset between consecutive attributes)
+            (6 * std::mem::size_of::<f32>()) as gl::types::GLint, // stride (byte offset between consecutive attributes)
             std::ptr::null() // offset of the first component
+        );
+
+        gl::EnableVertexAttribArray(1); // this is "layout (location = 0)" in vertex shader
+        gl::VertexAttribPointer(
+            1, // index of the generic vertex attribute ("layout (location = 0)")
+            3, // the number of components per generic vertex attribute
+            gl::FLOAT, // data type
+            gl::FALSE, // normalized (int-to-float conversion)
+            (6 * std::mem::size_of::<f32>()) as gl::types::GLint, // stride (byte offset between consecutive attributes)
+            (3 * std::mem::size_of::<f32>()) as *const gl::types::GLvoid // offset of the first component
         );
 
         gl::BindBuffer(gl::ARRAY_BUFFER, 0);
